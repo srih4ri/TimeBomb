@@ -10,6 +10,7 @@ import {
 } from 'react-native';
 
 import Row from './Row';
+import ProjectShow from './projectShow';
 
 const styles = StyleSheet.create({
   container: {
@@ -86,30 +87,15 @@ class ProjectList extends React.Component {
       ]
     }
     const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
-    console.log("Projects are", data.projects);
+    this._handleProjectArrowClick = this.handleProjectArrowClick.bind(this);
     this.state = {
       projects: data.projects,
       dataSource: ds.cloneWithRows(data.projects)
     }
   }
 
-  handleAddProject() {
-    let projects = this.state.projects;
-    console.log("State", this.state);
-    projects.push({name: this.state.newProjectName});
-    const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
-    this.setState({projects: projects, dataSource: ds.cloneWithRows(projects)});
-  }
-
-  handleTextInput(event) {
-    let textInput = {newProjectName: event.nativeEvent.text}
-    let newState = {}
-    Object.assign(newState, this.state, textInput)
-    this.setState(newState);
-  }
 
   _renderSeparator(sectionID: number, rowID: number, adjacentRowHighlighted: bool) {
-    console.log('Key',`${sectionID}-${rowID}`)
     return (
       <View
       key={`${sectionID}-${rowID}`}
@@ -118,9 +104,16 @@ class ProjectList extends React.Component {
     )
   }
 
+  handleProjectArrowClick(project) {
+    this.props.navigator.push({
+      component: ProjectShow,
+      title: project.name,
+      passProps: {project: project}
+    })
+  }
+
 
   render(){
-    console.log("Rendering List View", this._renderSeparator)
     return (
       <View style={styles.container}>
       <View style={styles.header}>
@@ -130,7 +123,12 @@ class ProjectList extends React.Component {
       <ListView
       dataSource= {this.state.dataSource}
       automaticallyAdjustContentInsets= {false}
-      renderRow={(data) => (<Row {...data}/>)}
+      renderRow={(project, sectionID, rowID) => 
+        <Row
+        project={project}
+        handleProjectArrowClick={this._handleProjectArrowClick}
+        />
+            }
       renderSeparator={this._renderSeparator}
       style={styles.projectList}
       contentContainerStyle={styles.projectListContainer}/>

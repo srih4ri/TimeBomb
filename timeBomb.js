@@ -6,6 +6,7 @@ import {
 import ProjectList from './projectList';
 
 class TimeBomb extends React.Component {
+
   render() {
     return(
       <NavigatorIOS

@@ -1,5 +1,8 @@
 import React from 'react';
-import { View, Text,StyleSheet, Image } from'react-native';
+import { View,
+         Text,
+         StyleSheet,
+         TouchableHighlight } from'react-native';
 
 const styles = StyleSheet.create({
   /* PROJECTS: */
@@ -29,26 +32,34 @@ const styles = StyleSheet.create({
     fontSize: 22,
     color: 'rgba(12,128,128,10)',
     fontWeight: 'bold',
-    flex: 0.07,
+    flex: 1,
     textAlign: 'center'
+  },
+  projectArrowTouchable: {
+    flex: 0.08,
   }
 });
+class Row extends React.Component {
 
-const Row = (project) => (
-  <View style={styles.container}>
+  render() {
+    const project = this.props.project;
+    return(<View style={styles.container}>
     <View style={styles.projectDetails}>
-      <Text style={styles.projectName}>
-       {project.name}
-      </Text>
-      <Text style={styles.openProjectArrow} >
-         
-      </Text>
+    <Text style={styles.projectName}>
+      {project.name}
+    </Text>
+      <TouchableHighlight style={styles.projectArrowTouchable}  onPress={ () => this.props.handleProjectArrowClick(project) } >
+    <Text style={styles.openProjectArrow} >
+    
+    </Text>
+    </TouchableHighlight>
     </View>
-  <Text style={styles.projectTimeSpent} >
+    <Text style={styles.projectTimeSpent} >
     Total time worked 05:00 hours
-  </Text>
+    </Text>
 
-  </View>
-);
+    </View>)
+  }
+}
 
 export default Row;
