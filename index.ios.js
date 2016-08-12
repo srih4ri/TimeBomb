@@ -16,20 +16,42 @@ import {
 } from 'react-native';
 
 import Row from './Row';
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    marginTop: 20
+    marginTop: 30,
+    flexDirection: 'column'
   },
-  textInput: {
-    height: 40,
-    borderColor: 'gray',
-    borderWidth: 1
+  header: {
+    padding: 10,
+    flex: 0.04,
+    flexDirection: 'row',
   },
-  addProjectContainer: {
-    borderColor: 'gray',
-    borderWidth: 1
+  projectList: {
+    flex: 0.96,
+    padding: 10,
+  },
+  headingText: {
+    fontSize: 16,
+    color: '#27AE60',
+    letterSpacing: 1.45,
+    fontFamily: 'HelveticaNeue-Bold',
+    fontWeight: 'bold',
+    flex: 0.93,
+    textAlign: 'left',
+  },
+  plusIcon: {
+    fontFamily: 'FontAwesome',
+    fontSize: 22,
+    color: '#27AE60',
+    fontWeight: '900',
+    flex: 0.07,
+    textAlign: 'center',
+    textAlignVertical: 'center'
+  },
+  separator: {
+    height: 1,
+    backgroundColor: '#EEEEEE'
   }
 });
 
@@ -39,7 +61,7 @@ class ProjectList extends React.Component {
     const data = {
       projects: [
         {
-          name: "Complete Timebomb",
+          name: "Timebomb Project",
           tasks: [
             {name: "Draw Screens"},
             {name: "Hire Labour"},
@@ -47,14 +69,21 @@ class ProjectList extends React.Component {
           ]
         },
         {
-          name: "Capture the world",
+          name: "Emami Project",
+          tasks: [
+            {name: "Draw Screens"},
+            {name: "Hire Labour"},
+            {name: "Rebel"}
+          ]
+        },
+        {
+          name: "Blog Article",
           tasks: [
             {name: "Draw Screens"},
             {name: "Hire Labour"},
             {name: "Rebel"}
           ]
         }
-
       ]
     }
     const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
@@ -80,25 +109,30 @@ class ProjectList extends React.Component {
     this.setState(newState);
   }
 
+  _renderSeparator(sectionID: number, rowID: number, adjacentRowHighlighted: bool) {
+    console.log('Key',`${sectionID}-${rowID}`)
+    return (
+      <View
+      key={`${sectionID}-${rowID}`}
+      style={styles.separator}
+      />
+    )
+  }
+
+
   render(){
-    console.log("Rendering List View")
+    console.log("Rendering List View", this._renderSeparator)
     return (
       <View style={styles.container}>
-      <Text>TimeBomb</Text>
-      <View style={styles.addProjectContainer}>
-      <TextInput
-      style= {styles.textInput}
-      onChange = {this.handleTextInput.bind(this)}
-      />
-      <TouchableHighlight
-      onPress={this.handleAddProject.bind(this)}>
-      <Text>Add a Project</Text>
-      </TouchableHighlight>
+        <View style={styles.header}>
+          <Text style={styles.headingText}>PROJECTS</Text>
+          <Text style={styles.plusIcon}></Text>
       </View>
       <ListView
-      dataSource= {this.state.dataSource}
-      renderRow={(data) => <Row {...data} />}
-      />
+        dataSource= {this.state.dataSource}
+        renderRow={(data) => (<Row {...data}/>)}
+        renderSeparator={this._renderSeparator}
+        style={styles.projectList}/>
       </View>
     );
   }
