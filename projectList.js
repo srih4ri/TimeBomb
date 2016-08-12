@@ -14,17 +14,20 @@ import Row from './Row';
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    marginTop: 30,
+    paddingTop: 65,
     flexDirection: 'column'
   },
   header: {
     padding: 10,
-    flex: 0.04,
+    flex: 0.05,
     flexDirection: 'row',
   },
   projectList: {
-    flex: 0.96,
-    padding: 10,
+    flex: 0.95,
+  },
+  projectListContainer: {
+    flex: 0.8,
+    padding: 0
   },
   headingText: {
     fontSize: 16,
@@ -126,9 +129,11 @@ class ProjectList extends React.Component {
       </View>
       <ListView
       dataSource= {this.state.dataSource}
+      automaticallyAdjustContentInsets= {false}
       renderRow={(data) => (<Row {...data}/>)}
       renderSeparator={this._renderSeparator}
-      style={styles.projectList}/>
+      style={styles.projectList}
+      contentContainerStyle={styles.projectListContainer}/>
       </View>
     );
   }

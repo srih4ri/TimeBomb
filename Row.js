@@ -4,9 +4,9 @@ import { View, Text,StyleSheet, Image } from'react-native';
 const styles = StyleSheet.create({
   /* PROJECTS: */
   container: {
-    flex: 1,
-    paddingTop: 15,
-    paddingBottom: 15
+    padding: 20,
+    paddingLeft: 10,
+    paddingRight: 10
   },
   projectDetails: {
     flex: 0.6,

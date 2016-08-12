@@ -10,5 +10,12 @@ import {
 } from 'react-native';
 
 import ProjectList from './projectList';
-
-AppRegistry.registerComponent('Timebomb', () => ProjectList);
+import TimeBomb from './timeBomb'
+class App extends React.Component {
+  render() {
+    return(
+      <TimeBomb />
+    )
+  }
+}
+AppRegistry.registerComponent('Timebomb', () => App);
