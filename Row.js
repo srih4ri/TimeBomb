@@ -33,32 +33,34 @@ const styles = StyleSheet.create({
     color: 'rgba(12,128,128,10)',
     fontWeight: 'bold',
     flex: 1,
-    textAlign: 'center'
+    textAlign: 'center',
   },
   projectArrowTouchable: {
     flex: 0.08,
-  }
+  },
 });
 class Row extends React.Component {
 
   render() {
     const project = this.props.project;
-    return(<View style={styles.container}>
-    <View style={styles.projectDetails}>
-    <Text style={styles.projectName}>
+    return (
+      <View style={styles.container}>
+      <View style={styles.projectDetails}>
+      <Text style={styles.projectName}>
       {project.name}
-    </Text>
+      </Text>
       <TouchableHighlight style={styles.projectArrowTouchable}  onPress={ () => this.props.handleProjectArrowClick(project) } >
-    <Text style={styles.openProjectArrow} >
-    
-    </Text>
-    </TouchableHighlight>
-    </View>
-    <Text style={styles.projectTimeSpent} >
-    Total time worked 05:00 hours
-    </Text>
+      <Text style={styles.openProjectArrow} >
+      
+      </Text>
+      </TouchableHighlight>
+      </View>
+      <Text style={styles.projectTimeSpent} >
+      Total time worked 05:00 hours
+      </Text>
 
-    </View>)
+      </View>
+    );
   }
 }
 
