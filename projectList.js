@@ -90,11 +90,9 @@ class ProjectList extends React.Component {
         }
       ]
     }
-    const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
     this._handleProjectArrowClick = this.handleProjectArrowClick.bind(this);
     this.state = {
-      projects: data.projects,
-      dataSource: ds.cloneWithRows(data.projects)
+      projects: data.projects
     }
   }
 
@@ -116,8 +114,21 @@ class ProjectList extends React.Component {
     })
   }
 
+  addProject(newProject){
+    console.log('Called with new proj', newProject)
+    projects = [...this.state.projects,
+      {
+        name: newProject,
+        tasks: []
+      }
+    ]
+    this.setState({projects: projects})
+  }
+
 
   render() {
+    const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+    const dataSource  = ds.cloneWithRows(this.state.projects)
     return (
       <View style={styles.container}>
         <View style={styles.header}>
@@ -125,10 +136,10 @@ class ProjectList extends React.Component {
           <Text style={styles.plusIcon}></Text>
         </View>
         <View style={styles.addProjectForm} >
-          <AddListItemForm/>
+          <AddListItemForm onSubmit={this.addProject.bind(this)}/>
         </View>
         <ListView
-          dataSource={this.state.dataSource}
+          dataSource={dataSource}
           automaticallyAdjustContentInsets={false}
           renderRow={(project, sectionID, rowID) =>
             <Row
